@@ -1,0 +1,15 @@
+# See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+server:
+   port: 8081
+
+spring:
+   main.show-banner: false
+   h2:
+      console:
+         enabled: true
+   datasource:
+      url: jdbc:h2:~/test2
+      username: system
+      password: 
+      driverClassName: org.h2.Driver

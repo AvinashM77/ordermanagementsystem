@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "815db072-ece8-4381-b1a7-224302608aa8",
+		"name": "Order Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\": \"nanda\",\r\n  \"shippingAddress\": {\r\n    \"street\": \"Erie St\",\r\n    \"city\": \"Edison\",\r\n    \"state\": \"NJ\",\r\n    \"zip\": \"07310\",\r\n    \"country\": \"US\"\r\n  },\r\n  \"orderItem\": [\r\n    {\r\n      \"productCode\": \"R01\",\r\n      \"productName\": \"Strong Perfume\",\r\n      \"quantity\": 2\r\n    },\r\n    {\r\n      \"productCode\": \"R02\",\r\n      \"productName\": \"X Mobile\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"amount\": 20000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create orderItems",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderItems\": [\r\n    {\r\n      \"productCode\": \"C01\",\r\n      \"productName\": \"Santoor\",\r\n      \"quantity\": 4\r\n    },\r\n    {\r\n      \"productCode\": \"C02\",\r\n      \"productName\": \"Lizol\",\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"orderId\": \"f809a7ea-9be2-41ca-b112-0adf2cba5e04\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/orderitem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"orderitem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get orderInfo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/order/e5d3386f-ad23-4130-8b4d-104b627ee147",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"order",
+						"e5d3386f-ad23-4130-8b4d-104b627ee147"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get orderItems",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/orderitem/c09277bf-4132-4305-90bc-e61dd8b01097",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"orderitem",
+						"c09277bf-4132-4305-90bc-e61dd8b01097"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
