@@ -20,4 +20,4 @@ feign:
   hystrix:
     enabled: true
 
-ORDER_ITEMS_HOST_URL: http://localhost:8080/orderitem
+ORDER_ITEMS_HOST_URL: http://localhost:8081/orderitem
