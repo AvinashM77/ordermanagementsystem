@@ -1,0 +1,23 @@
+{
+  "customerName": "mohan",
+  "shippingAddress": {
+    "street": "Erie St",
+    "city": "Edison",
+    "state": "NJ",
+    "zip": "07310",
+    "country": "US"
+  },
+  "orderItem": [
+    {
+      "productCode": "R01",
+      "productName": "Strong Perfume",
+      "quantity": 2
+    },
+    {
+      "productCode": "R02",
+      "productName": "X Mobile",
+      "quantity": 1
+    }
+  ],
+  "amount": 20000
+}

@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class OrderItemRequest {
 
 	@NotEmpty
-	@NotNull
+	@NotNull(message = "OrderId cannot be empty")
 	private String orderId;
 
 	@Size(min = 1)

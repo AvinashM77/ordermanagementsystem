@@ -1,0 +1,15 @@
+{
+  "orderItems": [
+    {
+      "productCode": "C01",
+      "productName": "Santoor",
+      "quantity": 4
+    },
+    {
+      "productCode": "C02",
+      "productName": "Lizol",
+      "quantity": 2
+    }
+  ],
+  "orderId": "f809a7ea-9be2-41ca-b112-0adf2cba5e04"
+}

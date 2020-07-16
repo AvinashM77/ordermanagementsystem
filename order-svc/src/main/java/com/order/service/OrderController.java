@@ -1,17 +1,17 @@
 package com.order.service;
 
 import javax.validation.Valid;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.order.clients.OrderItemServiceClient;
 import com.order.dao.IAddressDAO;
@@ -24,11 +24,11 @@ import com.order.model.OrderItemResponse;
 import com.order.model.OrderRequest;
 import com.order.model.OrderResponse;
 
-@Component
-@Path("/order")
-public class OrderService {
+@RestController
+@RequestMapping("/order")
+public class OrderController {
 
-	private static final Logger log = LogManager.getLogger(OrderService.class);
+	private static final Logger log = LogManager.getLogger(OrderController.class);
 
 	@Autowired
 	IOrderDAO iOrderDAO;
@@ -39,9 +39,8 @@ public class OrderService {
 	@Autowired
 	OrderItemServiceClient orderItemServiceClient;
 
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public BaseResponse createOrder(@Valid OrderRequest orderRequest) throws OrderBaseException {
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public BaseResponse createOrder(@Valid @RequestBody OrderRequest orderRequest) throws OrderBaseException {
 		log.info(" OrderService/createOrder ");
 
 		String addressId = iAddressDAO.save(orderRequest.getShippingAddress());
@@ -65,10 +64,8 @@ public class OrderService {
 		return new BaseResponse(orderId, "SUCCESS", "Order Created Successfully");
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{orderId}")
-	public OrderResponse getOrderInfo(@PathParam("orderId") String orderId) throws OrderBaseException {
+	@GetMapping(path = "/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public OrderResponse getOrderInfo(@PathVariable("orderId") String orderId) throws OrderBaseException {
 		log.info(" OrderService/getOrderInfo ");
 		OrderItemResponse orderItemResponse = null;
 		try {

@@ -9,7 +9,7 @@ package com.order.model;
  */
 public class BaseResponse {
 
-	private String refrenceId;
+	private String referenceId;
 	private String result;
 	private String message;
 
@@ -25,8 +25,8 @@ public class BaseResponse {
 	 * @param result
 	 * @param message
 	 */
-	public BaseResponse(String refrenceId, String result, String message) {
-		this.refrenceId = refrenceId;
+	public BaseResponse(String referenceId, String result, String message) {
+		this.referenceId = referenceId;
 		this.result = result;
 		this.message = message;
 	}
@@ -34,15 +34,15 @@ public class BaseResponse {
 	/**
 	 * @return the refrenceId
 	 */
-	public String getRefrenceId() {
-		return refrenceId;
+	public String getReferenceId() {
+		return referenceId;
 	}
 
 	/**
 	 * @param refrenceId the refrenceId to set
 	 */
-	public void setRefrenceId(String refrenceId) {
-		this.refrenceId = refrenceId;
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
 	}
 
 	/**

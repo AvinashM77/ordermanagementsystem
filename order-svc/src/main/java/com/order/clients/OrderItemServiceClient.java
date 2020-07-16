@@ -17,7 +17,7 @@ import com.order.model.OrderItemResponse;
  * @author amake
  *
  */
-@FeignClient(value = "orderItemClient", url = "${ORDER_ITEMS_HOST_URL}")
+@FeignClient(value = "orderItemClient", url = "${ORDER_ITEMS_HOST_URL}", fallback = OrderItemClientFallback.class)
 public interface OrderItemServiceClient {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/", produces = "application/json")

@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 /**
@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
  */
 public class OrderRequest {
 
-	@NotEmpty
-	@NotNull(message = "Name cannot be empty")
+	@NotEmpty(message = "Name cannot be empty")
+	@NotNull(message = "Name cannot be null")
 	private String customerName;
 	private Date orderDate;
 	@NotNull(message = "Address cannot be empty")
@@ -26,7 +26,7 @@ public class OrderRequest {
 	@Size(min = 1)
 	@NotNull(message = "OrderItems cannot be empty")
 	private List<OrderItem> orderItem;
-	@PositiveOrZero
+	@Positive(message = "Amount cannot be empty or cannot be lessthan 1")
 	private double amount;
 
 	/**
