@@ -17,5 +17,7 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: basic
+  hystrix:
+    enabled: true
 
 ORDER_ITEMS_HOST_URL: http://localhost:8080/orderitem

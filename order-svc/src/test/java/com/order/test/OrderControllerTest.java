@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.openfeign.FeignAutoConfiguration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,7 +32,6 @@ import com.order.test.utils.TestDataUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = OrderApp.class)
 @ContextConfiguration(classes = TestAppConfig.class)
-@Import({ FeignAutoConfiguration.class })
 @WebAppConfiguration
 public class OrderControllerTest {
 
@@ -66,7 +63,6 @@ public class OrderControllerTest {
 		mvc.perform(MockMvcRequestBuilders.get("/order/{orderId}", orderId).accept(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.orderItems").exists());
-
 	}
 
 }
