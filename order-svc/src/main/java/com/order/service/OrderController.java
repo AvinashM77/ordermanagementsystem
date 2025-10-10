@@ -1,7 +1,6 @@
 package com.order.service;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +51,8 @@ public class OrderController {
 		String orderId = iOrderDAO.save(new Order(orderRequest.getCustomerName(), addressId, orderRequest.getAmount()));
 
 		try {
-			BaseResponse response = orderItemServiceClient
-					.addOrderItems(new OrderItemRequest(orderId, orderRequest.getOrderItem()));
+			BaseResponse response =
+                    orderItemServiceClient.addOrderItems(new OrderItemRequest(orderId, orderRequest.getOrderItem()));
 			if (response != null && "SUCCESS".equals(response.getResult())) {
 				log.info(" OrderService/orderItems :: {}", response.getMessage());
 			}
@@ -67,7 +66,7 @@ public class OrderController {
 	@GetMapping(path = "/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public OrderResponse getOrderInfo(@PathVariable("orderId") String orderId) throws OrderBaseException {
 		log.info(" OrderService/getOrderInfo ");
-		OrderItemResponse orderItemResponse = null;
+		OrderItemResponse orderItemResponse;
 		try {
 			orderItemResponse = orderItemServiceClient.getOrderItems(orderId);
 		} catch (Exception e) {

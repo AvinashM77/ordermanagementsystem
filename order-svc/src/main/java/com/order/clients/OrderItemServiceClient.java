@@ -17,10 +17,10 @@ import com.order.model.OrderItemResponse;
  * @author amake
  *
  */
-@FeignClient(value = "orderItemClient", url = "${ORDER_ITEMS_HOST_URL}", fallback = OrderItemClientFallback.class)
+@FeignClient(value = "orderItemClient", url = "${api-client.host}"+"${api-client.order-items-endpoint}")
 public interface OrderItemServiceClient {
 
-	@RequestMapping(method = RequestMethod.POST, value = "/", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, value = "", produces = "application/json")
 	BaseResponse addOrderItems(@RequestBody OrderItemRequest orderItemRequest);
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{orderId}", produces = "application/json")

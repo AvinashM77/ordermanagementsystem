@@ -1,73 +1,52 @@
 package com.orderitem.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.google.gson.Gson;
-import com.orderitem.OrderItemApp;
 import com.orderitem.dao.IOrderItemDAO;
+import com.orderitem.dao.OrderItemDAOImpl;
 import com.orderitem.model.OrderItem;
 import com.orderitem.model.OrderItemRequest;
-import com.orderitem.test.config.TestAppConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = OrderItemApp.class)
-@ContextConfiguration(classes = TestAppConfig.class)
-public class OrderItemDAOTest {
+import java.util.List;
 
-	private static final Logger log = LogManager.getLogger(OrderItemDAOTest.class);
+import static com.orderitem.test.TestDataUtils.prepareRequest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-	@Autowired
-	IOrderItemDAO iOrderItemDAO;
+class OrderItemDAOTest {
 
-	/**
-	 * create orderItem test.
-	 */
-	@org.junit.Test
-	public void createOrderItem() {
-		log.info(" OrderItemServiceTest/createOrderItem ");
-		OrderItemRequest orderRequest = prepareRequest();
-		boolean flag = iOrderItemDAO.save(orderRequest.getOrderItems(), orderRequest.getOrderId());
-		assertTrue(flag);
-	}
+    JdbcTemplate mockJdbcTemplate = mock(JdbcTemplate.class);
 
-	/**
-	 * get orderItems test.
-	 */
-	@org.junit.Test
-	public void getOrderItems() {
-		log.info(" OrderItemServiceTest/getOrderInfo ");
-		String orderId = "f809a7ea-9be2-41ca-b112-0adf2cba5e04";
-		List<OrderItem> orderItems = iOrderItemDAO.getOrderItemsByOrderId(orderId);
-		assertEquals(2, orderItems.size());
-	}
+    private IOrderItemDAO iOrderItemDAO;
 
-	private OrderItemRequest prepareRequest() {
-		try (InputStream stream = OrderItemDAOTest.class.getClassLoader()
-				.getResourceAsStream("orderItemRequest.json")) {
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-			String json = writer.toString();
-			return new Gson().fromJson(json, OrderItemRequest.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @BeforeEach
+    void setUp() {
+        iOrderItemDAO = new OrderItemDAOImpl(mockJdbcTemplate);
+    }
+
+    @Test
+    void createOrderItem() {
+        OrderItemRequest orderRequest = prepareRequest();
+        when(mockJdbcTemplate.batchUpdate(anyString(), any(), anyInt(), any())).thenReturn(new int[][]{{1}, {1}});
+        boolean flag = iOrderItemDAO.save(orderRequest.getOrderItems(), orderRequest.getOrderId());
+        assertTrue(flag, "Order items should be saved successfully");
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
+    void getOrderItems() {
+        String orderId = "f809a7ea-9be2-41ca-b112-0adf2cba5e04";
+        when(mockJdbcTemplate.query(anyString(), (PreparedStatementSetter) any(), (RowMapper) any()))
+                .thenReturn(prepareRequest().getOrderItems());
+        List<OrderItem> orderItems = iOrderItemDAO.getOrderItemsByOrderId(orderId);
+        assertEquals(2, orderItems.size(), "Should find 2 order items");
+    }
+
 
 }

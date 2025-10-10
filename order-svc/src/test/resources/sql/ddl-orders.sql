@@ -1,0 +1,19 @@
+-- SQL script to create the necessary tables for the order service
+-- DDL for Orders table
+DROP TABLE IF EXISTS Orders;
+CREATE TABLE Orders(
+    ORDERID VARCHAR(100) PRIMARY KEY,
+    CUSTOMER_NAME VARCHAR(255),
+    ORDER_DATE TIMESTAMP,
+    ADDRESS_ID VARCHAR(100),
+    AMOUNT DOUBLE);
+
+-- DDL for Address table
+DROP TABLE IF EXISTS Address;
+CREATE TABLE Address(
+    ADDRESS_ID VARCHAR(100) PRIMARY KEY,
+    STREET VARCHAR(255),
+    CITY VARCHAR(255),
+    STATE VARCHAR(255),
+    ZIP VARCHAR(255),
+    COUNTRY VARCHAR(255));
