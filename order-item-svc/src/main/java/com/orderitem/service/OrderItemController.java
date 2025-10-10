@@ -2,8 +2,7 @@ package com.orderitem.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,13 @@ public class OrderItemController {
 
 	private static final Logger log = LogManager.getLogger(OrderItemController.class);
 
-	@Autowired
-	IOrderItemDAO iOrderDAO;
+	private final IOrderItemDAO iOrderDAO;
 
-	@PostMapping(path = "/orderitem", produces = MediaType.APPLICATION_JSON_VALUE)
+    public OrderItemController(IOrderItemDAO iOrderDAO) {
+        this.iOrderDAO = iOrderDAO;
+    }
+
+    @PostMapping(path = "/orderitem", produces = MediaType.APPLICATION_JSON_VALUE)
 	public BaseResponse createOrderItem(@Valid @RequestBody OrderItemRequest orderRequest) {
 		log.info(" OrderItemService/createOrderItem ");
 
