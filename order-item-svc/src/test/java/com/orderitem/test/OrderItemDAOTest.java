@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import com.orderitem.test.config.DBConfig;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ import com.orderitem.model.OrderItemRequest;
 import com.orderitem.test.config.TestAppConfig;
 
 @SpringBootTest(classes = OrderItemApp.class)
-@ContextConfiguration(classes = TestAppConfig.class)
+@ContextConfiguration(classes = DBConfig.class)
 class OrderItemDAOTest {
 
     private static final Logger log = LogManager.getLogger(OrderItemDAOTest.class);

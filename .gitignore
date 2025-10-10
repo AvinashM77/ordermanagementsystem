@@ -2,3 +2,6 @@
 /.idea/
 /.gradle/
 /workspace.xml
+/build/
+/order-item-svc/build/
+/order-svc/build/

@@ -1,17 +1,12 @@
 package com.order.test;
 
-import static org.junit.Assert.assertNotNull;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.order.OrderApp;
 import com.order.dao.IAddressDAO;
@@ -23,10 +18,10 @@ import com.order.model.OrderResponse;
 import com.order.test.config.TestAppConfig;
 import com.order.test.utils.TestDataUtils;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @SpringBootTest(classes = OrderApp.class)
 @ContextConfiguration(classes = TestAppConfig.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OrderDAOTest {
 
 	private static final Logger log = LogManager.getLogger(OrderDAOTest.class);

@@ -1,7 +1,8 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 buildscript {
     repositories {
         mavenCentral()
-        gradlePluginPortal()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
@@ -15,8 +16,11 @@ plugins {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
 
     java {
         toolchain {
@@ -25,6 +29,7 @@ subprojects {
     }
 
     dependencies {
+
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-jdbc'
         implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -34,35 +39,30 @@ subprojects {
         runtimeOnly 'com.h2database:h2'
         implementation "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16"
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 
     dependencyManagement {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.0.0"
+            mavenBom SpringBootPlugin.BOM_COORDINATES
         }
     }
 
-    tasks.withType(Test) {
+    tasks.withType(Test).configureEach {
         useJUnitPlatform()
     }
 
-    jar {
+    /*jar {
         enabled = false
+    }*/
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs.add("-parameters")
     }
 
-    bootJar {
+/*    bootJar {
         enabled = true
-    }
-}
+    }*/
 
-/*project(':order-svc') {
-    bootJar {
-        mainClass = 'com.order.OrderApp'
-    }
 }
-
-project(':order-item-svc') {
-    bootJar {
-        mainClass = 'com.orderitem.OrderItemApp'
-    }
-}*/
