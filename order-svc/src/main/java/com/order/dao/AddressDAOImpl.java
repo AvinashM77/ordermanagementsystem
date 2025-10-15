@@ -3,25 +3,27 @@
  */
 package com.order.dao;
 
-import java.util.UUID;
-
+import com.order.model.Address;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.order.model.Address;
+import java.util.UUID;
 
 /**
  * @author amake
  *
  */
 @Component
+@RequiredArgsConstructor
 public class AddressDAOImpl implements IAddressDAO {
 
     private static final Logger log = LogManager.getLogger(AddressDAOImpl.class);
+
+    private final JdbcTemplate jdbcTemplate;
 
     private static final String SELECT_ADDRESS_BY_DETAILS =
         "SELECT * FROM Address WHERE STREET = ? AND CITY = ? AND STATE = ? AND ZIP = ? AND COUNTRY = ?";
@@ -29,9 +31,6 @@ public class AddressDAOImpl implements IAddressDAO {
         "INSERT INTO Address (ADDRESS_ID, STREET, CITY, STATE, ZIP, COUNTRY) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SELECT_ADDRESS_BY_ID =
         "SELECT * FROM Address WHERE ADDRESS_ID = ?";
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     /**
 	 * {@inheritDoc}
@@ -68,7 +67,7 @@ public class AddressDAOImpl implements IAddressDAO {
                     ps.setString(4, address.getZip());
                     ps.setString(5, address.getCountry());
                 },
-                (rs, rowNum) -> new Address(
+                (rs, _) -> new Address(
                     rs.getString("ADDRESS_ID"),
                     rs.getString("STREET"),
                     rs.getString("CITY"),
@@ -94,7 +93,7 @@ public class AddressDAOImpl implements IAddressDAO {
 			return jdbcTemplate.query(
                 SELECT_ADDRESS_BY_ID,
                 ps -> ps.setString(1, addressId),
-                (rs, rowNum) -> new Address(
+                (rs, _) -> new Address(
                     rs.getString("ADDRESS_ID"),
                     rs.getString("STREET"),
                     rs.getString("CITY"),

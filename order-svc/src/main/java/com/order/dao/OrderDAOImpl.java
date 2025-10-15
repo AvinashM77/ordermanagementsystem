@@ -3,27 +3,28 @@
  */
 package com.order.dao;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-
 import com.order.exception.OrderBaseException;
 import com.order.model.Address;
 import com.order.model.Order;
 import com.order.model.OrderResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author amake
  *
  */
 @Component
+@RequiredArgsConstructor
 public class OrderDAOImpl implements IOrderDAO {
+
+    private final JdbcTemplate jdbcTemplate;
 
     private static final String INSERT_ORDER =
         "INSERT INTO Orders (ORDERID, CUSTOMER_NAME, ORDER_DATE, ADDRESS_ID, AMOUNT) VALUES (?, ?, ?, ?, ?)";
@@ -34,9 +35,6 @@ public class OrderDAOImpl implements IOrderDAO {
         "SELECT * FROM Orders WHERE CUSTOMER_NAME = ?";
     private static final String SELECT_ORDERS_BY_DATE_RANGE =
         "SELECT * FROM Orders WHERE ORDER_DATE BETWEEN ? AND ?";
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     /**
 	 * {@inheritDoc}
@@ -69,7 +67,7 @@ public class OrderDAOImpl implements IOrderDAO {
 			return jdbcTemplate.query(
 				SELECT_ORDER_WITH_ADDRESS,
 				ps -> ps.setString(1, orderId),
-				(rs, rowNum) -> new OrderResponse(
+				(rs, _) -> new OrderResponse(
 					rs.getString("ORDERID"),
 					rs.getString("CUSTOMER_NAME"),
 					rs.getDate("ORDER_DATE"),
@@ -100,7 +98,7 @@ public class OrderDAOImpl implements IOrderDAO {
 			List<Order> orders = jdbcTemplate.query(
 				SELECT_ORDERS_BY_CUSTOMER,
 				ps -> ps.setString(1, customerName),
-				(rs, rowNum) -> new Order(
+				(rs, _) -> new Order(
 					rs.getString("ORDERID"),
 					rs.getString("CUSTOMER_NAME"),
 					rs.getDate("ORDER_DATE"),
@@ -128,7 +126,7 @@ public class OrderDAOImpl implements IOrderDAO {
 					ps.setDate(1, new java.sql.Date(startDate.getTime()));
 					ps.setDate(2, new java.sql.Date(endDate.getTime()));
 				},
-				(rs, rowNum) -> new Order(
+				(rs, _) -> new Order(
 					rs.getString("ORDERID"),
 					rs.getString("CUSTOMER_NAME"),
 					rs.getDate("ORDER_DATE"),

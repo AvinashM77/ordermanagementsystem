@@ -16,33 +16,37 @@ public interface IOrderDAO {
 	/**
 	 * creates the order.
 	 * 
-	 * @param order
-	 * @return
+	 * @param order order
+	 * @return orderId
+     * @throws OrderBaseException on failure
 	 */
 	String save(Order order) throws OrderBaseException;
 
 	/**
 	 * gets the order by Id.
 	 * 
-	 * @param orderId
-	 * @return
+	 * @param orderId orderId
+	 * @return OrderResponse
+     * @throws OrderBaseException on failure
 	 */
 	OrderResponse get(String orderId) throws OrderBaseException;
 
 	/**
 	 * get Orders by customerName.
 	 * 
-	 * @param customerName
-	 * @return
+	 * @param customerName customerName
+	 * @return list of orders
+     * @throws OrderBaseException on failure
 	 */
 	List<Order> getOrdersByCustomerName(String customerName) throws OrderBaseException;
 
 	/**
 	 * get Orders by date range.
 	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
+	 * @param startDate startDate
+	 * @param endDate endDate
+	 * @return list of orders
+     * @throws OrderBaseException on failure
 	 */
 	List<Order> getOrdersByDateRange(Date startDate, Date endDate) throws OrderBaseException;
 

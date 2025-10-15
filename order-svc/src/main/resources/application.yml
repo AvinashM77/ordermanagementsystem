@@ -1,13 +1,17 @@
 # See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+server:
+  port: 8082
+
 spring:
    main.show-banner: false
    h2:
       console:
          enabled: true
    datasource:
-      url: jdbc:h2:~/test
-      username: system
-      password: 
+      url: jdbc:h2:file:~/build/data/h2
+      username: sa
+      password: password
       driverClassName: org.h2.Driver
 
 feign:
@@ -20,4 +24,6 @@ feign:
   hystrix:
     enabled: true
 
-ORDER_ITEMS_HOST_URL: http://localhost:8081/orderitem
+api-client:
+  host: http://localhost:8081
+  order-items-endpoint: /orderitem

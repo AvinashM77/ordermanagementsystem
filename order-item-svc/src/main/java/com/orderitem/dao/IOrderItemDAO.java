@@ -13,24 +13,17 @@ public interface IOrderItemDAO {
 	/**
 	 * creates the order.
 	 * 
-	 * @param order
-	 * @return
+	 * @param orderItems list of order items
+     * @param orderId    orderId
+	 * @return boolean
 	 */
 	boolean save(List<OrderItem> orderItems, String orderId);
 
 	/**
-	 * gets the order by Id.
-	 * 
-	 * @param orderId
-	 * @return
-	 */
-	OrderItem get(String orderItemId);
-
-	/**
 	 * get Orders by customerName.
 	 * 
-	 * @param customerName
-	 * @return
+	 * @param orderId orderId
+	 * @return list of orders
 	 */
 	List<OrderItem> getOrderItemsByOrderId(String orderId);
 

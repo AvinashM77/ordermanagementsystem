@@ -2,7 +2,7 @@ name: CI Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ '**', "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -17,7 +17,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '25'
+          java-version: '24'
           distribution: 'temurin'
           cache: gradle
 
