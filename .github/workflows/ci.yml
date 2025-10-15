@@ -25,7 +25,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build --info
+        run: ./gradlew clean build
 
       - name: Test reports
         if: always()
