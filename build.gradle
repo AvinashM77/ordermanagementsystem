@@ -14,9 +14,21 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
+static def getCurrentBranch() {
+    def branch = ''
+    def proc = 'git rev-parse --abbrev-ref HEAD'.execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.waitFor()
+    return branch
+}
+
+print "Current branch: ${getCurrentBranch()}\n"
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
+
+    version = getCurrentBranch() == 'main' ? version : (version.split('-')[0] + '-SNAPSHOT')
 
     repositories {
         mavenCentral()
